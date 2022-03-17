@@ -15,7 +15,7 @@ public class Missile : MonoBehaviour
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Vector3 targetDirection = target.position - transform.position;
         Vector3 lookDirection = Vector3.RotateTowards(transform.forward, targetDirection, rotationSpeed * Time.deltaTime, 0f);
