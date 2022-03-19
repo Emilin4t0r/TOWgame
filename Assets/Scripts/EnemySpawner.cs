@@ -5,11 +5,14 @@ using PathCreation.Examples;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public List<GameObject> enemyTypes;
-    List<GameObject> activeEnemies;
+    public static EnemySpawner instance;
 
-    private void Start()
+    public List<GameObject> enemyTypes;
+    public List<GameObject> activeEnemies;
+
+    private void Awake()
     {
+        instance = this;
         activeEnemies = new List<GameObject>();
     }
 
@@ -18,9 +21,10 @@ public class EnemySpawner : MonoBehaviour
         if (activeEnemies.Count < 3)
         {
             GameObject ufo = Instantiate(enemyTypes[Random.Range(0, 3)], transform.position, Quaternion.identity);
-            float randScale = Random.Range(1f, 2f);
+            float randScale = Random.Range(2f, 3f);
+            ufo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             ufo.transform.localScale = new Vector3(randScale, randScale, randScale);
-            ufo.transform.GetChild(0).GetComponent<PathFollower>().speed = Random.Range(1f, 2f);
+            ufo.transform.GetChild(0).GetComponent<PathFollower>().speed = Random.Range(0.5f, 1f);
             activeEnemies.Add(ufo);
         }
     }
