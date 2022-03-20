@@ -24,7 +24,7 @@ public class EnemySpawner : MonoBehaviour
             float randScale = Random.Range(2f, 3f);
             ufo.transform.localEulerAngles = new Vector3(0, Random.Range(0, 360), 0);
             ufo.transform.localScale = new Vector3(randScale, randScale, randScale);
-            ufo.transform.GetChild(0).GetComponent<PathFollower>().speed = Random.Range(0.5f, 1f);
+            ufo.transform.GetChild(0).GetComponent<PathFollower>().speed = Random.Range(0.3f, 0.7f);
             activeEnemies.Add(ufo);
         }
     }

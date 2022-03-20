@@ -10,7 +10,7 @@ public class Radar : MonoBehaviour
 
     List<Collider> targets;
     List<GameObject> blips;
-    float nextSearchTime;
+    float nextSearchTime = 0;
 
     private void Start()
     {
@@ -28,7 +28,7 @@ public class Radar : MonoBehaviour
         blipParent.transform.localEulerAngles = new Vector3(0, 0, z);
     }
 
-    void SearchForTargets()
+    void SearchForTargets() //does TWO instances of same enemy both as blip and as target. FIX
     {
         foreach (var blip in blips)
         {
@@ -42,6 +42,7 @@ public class Radar : MonoBehaviour
             if (col.CompareTag("Enemy"))
             {
                 targets.Add(col);
+                print("added " + col.transform.parent.name);
             }
         }
         foreach(var target in targets)
