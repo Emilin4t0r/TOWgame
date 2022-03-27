@@ -77,7 +77,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -151,6 +151,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 5307463197752397034}
     m_Modifications:
     - target: {fileID: 57668504284450571, guid: 872dfabcb6fd8b34cb6785195f69d23e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 57668504284450571, guid: 872dfabcb6fd8b34cb6785195f69d23e, type: 3}
       propertyPath: pathCreator
       value: 
       objectReference: {fileID: 5269655437534484010}
@@ -201,6 +205,10 @@ PrefabInstance:
     - target: {fileID: 4463703143906346663, guid: 872dfabcb6fd8b34cb6785195f69d23e, type: 3}
       propertyPath: m_Name
       value: UFO
+      objectReference: {fileID: 0}
+    - target: {fileID: 8521245385135667834, guid: 872dfabcb6fd8b34cb6785195f69d23e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 57668504284450570, guid: 872dfabcb6fd8b34cb6785195f69d23e, type: 3}

@@ -4,44 +4,57 @@ using UnityEngine;
 
 public class Radar : MonoBehaviour
 {
+    public static Radar instance;
+
     public float interval;
     public GameObject blip;
     public Transform blipParent;
 
-    List<Collider> targets;
+    List<GameObject> targets;
     List<GameObject> blips;
     float nextSearchTime = 0;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
         blips = new List<GameObject>();
+        targets = new List<GameObject>();
     }
 
     private void FixedUpdate()
     {
         if (Time.time > nextSearchTime)
         {
-            SearchForTargets();
+            SearchForNewTargets();
             nextSearchTime = Time.time + interval;
         }
         float z = transform.parent.localEulerAngles.y;
         blipParent.transform.localEulerAngles = new Vector3(0, 0, z);
     }
 
-    void SearchForTargets() //does TWO instances of same enemy both as blip and as target. FIX
+    public void RemoveFromTargets(GameObject target_)
+    {
+        targets.Remove(target_);
+    }
+
+    void SearchForNewTargets() //gets TWO instances of same enemy both as blip and as target. FIX
     {
         foreach (var blip in blips)
         {
             Destroy(blip.gameObject);
         }
         blips.Clear();
-        targets = new List<Collider>();
         Collider[] cols = Physics.OverlapSphere(transform.position, 10000);
         foreach (Collider col in cols)
         {
-            if (col.CompareTag("Enemy"))
+            if (col.CompareTag("Enemy") && !col.GetComponent<UFO>().hasBeenRadared)
             {
-                targets.Add(col);
+                targets.Add(col.gameObject);
+                col.GetComponent<UFO>().hasBeenRadared = true;
                 print("added " + col.transform.parent.name);
             }
         }
@@ -53,8 +66,6 @@ public class Radar : MonoBehaviour
             float z = target.transform.position.z / 3000;
             blip_.transform.localPosition = new Vector3(x, z, 0);
             blips.Add(blip_);
-        }
-        
-
+        }       
     }
 }

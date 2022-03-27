@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject moveTarget, missile;
     public GameObject cam1, cam2;
     public GameObject tubeRotator;
+    public float launchDelay;
     public bool scopedIn;
 
     private bool activeMissile;
@@ -59,7 +60,7 @@ public class GameManager : MonoBehaviour
     void SpawnMissile()
     {
         activeMissile = true;
-        mslTemp = Instantiate(missile, missileSpawner.transform.position, missileSpawner.transform.localRotation, transform);
+        mslTemp = Instantiate(missile, missileSpawner.transform.position, missileSpawner.transform.rotation, transform);
         targetTemp = Instantiate(moveTarget, missileSpawner.transform.position, missileSpawner.transform.parent.transform.parent.transform.localRotation, missileSpawner.transform);
     }
 

@@ -9,14 +9,37 @@ public class Missile : MonoBehaviour
     public float rotationSpeed;
     public string targetTag;
     public float AOERadius;
+    public float launchForce;
     private Transform target;
+    private Rigidbody rb;
+    bool isLaunched;
     
     private void Start()
     {
+        rb = gameObject.GetComponent<Rigidbody>();
+        isLaunched = false;
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
+        TrackTargetAndMoveOneStep();
+        StartCoroutine(LaunchDelayer());
+    }
+
+    private IEnumerator LaunchDelayer()
+    {
+        rb.AddForce(transform.TransformDirection(Vector3.forward) * launchForce, ForceMode.Impulse);
+        yield return new WaitForSeconds(GameManager.instance.launchDelay);
+        rb.isKinematic = false;
+        isLaunched = true;
     }
 
     private void Update()
+    {
+        if (isLaunched)
+        {
+            TrackTargetAndMoveOneStep();
+        }
+    }
+
+    void TrackTargetAndMoveOneStep()
     {
         Vector3 targetDirection = target.position - transform.position;
         Vector3 lookDirection = Vector3.RotateTowards(transform.forward, targetDirection, rotationSpeed * Time.deltaTime, 0f);

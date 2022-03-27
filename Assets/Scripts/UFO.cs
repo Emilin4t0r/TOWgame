@@ -15,6 +15,7 @@ public class UFO : MonoBehaviour
     bool fadingIn;    
     float timeToUpdateText;
     Color lastColor;
+    public bool hasBeenRadared;
 
     private void Start()
     {
@@ -23,6 +24,7 @@ public class UFO : MonoBehaviour
     }
     public void Kill()
     {
+        Radar.instance.RemoveFromTargets(gameObject);
         transform.parent.GetComponent<Enemy>().Kill();        
     }
 
@@ -38,8 +40,7 @@ public class UFO : MonoBehaviour
         lastColor = shapes[0].material.color;
         foreach (var shape in shapes)
         {
-            Color color_ = shape.material.color;
-            color_ = new Color(lastColor.r, lastColor.g, lastColor.b, 0);
+            Color color_ = new Color(lastColor.r, lastColor.g, lastColor.b, 0);
             shape.material.color = color_;
         }        
     }
