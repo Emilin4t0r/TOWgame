@@ -54,6 +54,9 @@ public class Missile : MonoBehaviour
         {
             collision.transform.GetComponent<UFO>().Kill();
             GameManager.instance.ExplodeMissile();
+        } else
+        {
+            GameManager.instance.ExplodeMissile();
         }
     }
 

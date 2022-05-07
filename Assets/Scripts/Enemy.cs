@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public void Kill()
     {
         Destroy(gameObject);
+        Destroy(transform.GetChild(0).GetComponent<UFO>().canvas.gameObject);
         EnemySpawner.instance.activeEnemies.Remove(gameObject);        
     }
 

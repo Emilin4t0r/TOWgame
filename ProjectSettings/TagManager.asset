@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Missile
   - UICamera
+  - Launcher
+  - ScopeTarget
   layers:
   - Default
   - TransparentFX
