@@ -13,7 +13,9 @@ public class Missile : MonoBehaviour
     private Transform target;
     private Rigidbody rb;
     bool isLaunched;
-    
+    public GameObject fireEffect;
+    public GameObject smokeEffect;
+
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -29,6 +31,8 @@ public class Missile : MonoBehaviour
         yield return new WaitForSeconds(GameManager.instance.launchDelay);
         rb.isKinematic = false;
         isLaunched = true;
+        fireEffect.SetActive(true);
+        smokeEffect.SetActive(true);
     }
 
     private void Update()

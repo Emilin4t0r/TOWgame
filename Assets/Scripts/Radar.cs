@@ -8,6 +8,7 @@ public class Radar : MonoBehaviour
 
     public float interval;
     public GameObject blip;
+    public GameObject rotPoint;
     public Transform blipParent;
 
     List<GameObject> targets;
@@ -29,10 +30,10 @@ public class Radar : MonoBehaviour
     {
         if (Time.time > nextSearchTime)
         {
-            SearchForNewTargets();
+            SearchForTargets();
             nextSearchTime = Time.time + interval;
         }
-        float z = transform.parent.localEulerAngles.y;
+        float z = rotPoint.transform.localEulerAngles.y;
         blipParent.transform.localEulerAngles = new Vector3(0, 0, z);
     }
 
@@ -41,7 +42,7 @@ public class Radar : MonoBehaviour
         targets.Remove(target_);
     }
 
-    void SearchForNewTargets() //gets TWO instances of same enemy both as blip and as target. FIX
+    void SearchForTargets() //gets TWO instances of same enemy both as blip and as target. FIX
     {
         foreach (var blip in blips)
         {

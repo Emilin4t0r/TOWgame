@@ -7,25 +7,23 @@ using TMPro;
 public class UFO : MonoBehaviour
 {
     GameObject missile;
-    public GameObject canvas;
+    public GameObject canvasParent;
     public TextMeshProUGUI distText;
     public TextMeshProUGUI targetNameText;
     public List<Renderer> shapes;
+    public float canvasSizeMultip = 500; 
 
     Slider slider;
-    bool fadingIn;
     float timeToUpdateText;
-    Color lastColor;
     public bool hasBeenRadared;
     public bool moveTargetImage;
 
     private void Start()
     {
-        slider = canvas.transform.GetChild(0).transform.GetChild(2).transform.GetComponent<Slider>();
-        StartCoroutine(WaitBeforeFadingIn());
-        canvas.transform.SetParent(null, false);
+        slider = canvasParent.transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).transform.GetComponent<Slider>();
+        canvasParent.transform.SetParent(null, false);
         moveTargetImage = true;
-        canvas.SetActive(false);
+        StartCoroutine(SpawnIn());
     }
     public void Kill()
     {
@@ -33,36 +31,24 @@ public class UFO : MonoBehaviour
         transform.parent.GetComponent<Enemy>().Kill();
     }
 
-    IEnumerator WaitBeforeFadingIn()
+    void CanvasOn(bool val)
     {
-        MakeInvisible();
-        yield return new WaitForSeconds(1.5f);
-        fadingIn = true;
+        if (!val)
+            canvasParent.transform.GetChild(0).transform.localPosition = new Vector3(0, -10000, 0);
+        else
+            canvasParent.transform.GetChild(0).transform.localPosition = new Vector3(0, 0, 0);
+    }
+    bool CheckCanvasOn()
+    {
+        if (canvasParent.transform.GetChild(0).transform.localPosition.y == -10000)
+            return false;
+        else return true;
     }
 
-    void MakeInvisible()
+    IEnumerator SpawnIn()
     {
-        lastColor = shapes[0].material.color;
-        foreach (var shape in shapes)
-        {
-            Color color_ = new Color(lastColor.r, lastColor.g, lastColor.b, 0);
-            shape.material.color = color_;
-        }
-    }
-
-    void FadeOneStep()
-    {
-        lastColor = shapes[0].material.color;
-        float fadeAmt = lastColor.a + (0.5f * Time.deltaTime);
-        Color color = new Color(lastColor.r, lastColor.g, lastColor.b, fadeAmt);
-        foreach (var shape in shapes)
-        {
-            shape.material.color = color;
-        }
-        if (fadeAmt >= 1)
-        {
-            fadingIn = false;
-        }
+        yield return new WaitForSeconds(0.1f);
+        CanvasOn(false);
     }
 
     void CheckForVisibility()
@@ -91,36 +77,31 @@ public class UFO : MonoBehaviour
     {
         if (ScopeController.instance.targetedVehicle == gameObject)
         {
-            if (!canvas.activeSelf)
+            if (!CheckCanvasOn())
             {
-                canvas.SetActive(true);
+                CanvasOn(true);
                 targetNameText.text = ScopeController.instance.targetName;
             }
         }
         else
         {
-            if (canvas.activeSelf)
-                canvas.SetActive(false);
+            if (CheckCanvasOn())
+                CanvasOn(false);
         }
     }
 
     private void Update()
     {
-        if (fadingIn)
-        {
-            FadeOneStep();
-        }
-
         if (GameManager.instance.scopedIn)
-        {            
+        {
             CheckForVisibility();
             if (moveTargetImage)
             {
-                canvas.transform.LookAt(Vector3.zero);
+                canvasParent.transform.LookAt(Vector3.zero);
                 float dist = Vector3.Distance(transform.position, Vector3.zero);
-                canvas.transform.localScale = new Vector3(dist / 100, dist / 100, 1);
-                canvas.transform.localPosition = transform.position;
-                canvas.transform.Translate(0, 0, 10, Space.Self);
+                canvasParent.transform.localScale = new Vector3(dist / canvasSizeMultip, dist / canvasSizeMultip, 1);
+                canvasParent.transform.localPosition = transform.position;
+                canvasParent.transform.Translate(0, 0, 10, Space.Self);
             }
             float distFromMissile;
             if (missile == null)
@@ -143,8 +124,8 @@ public class UFO : MonoBehaviour
         }
         else
         {
-            if (canvas.activeSelf)
-                canvas.SetActive(false);
+            if (CheckCanvasOn())
+                CanvasOn(false);
         }
     }
 }
