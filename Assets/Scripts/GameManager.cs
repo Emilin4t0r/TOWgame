@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public bool scopedIn;
 
     private bool activeMissile;
-    private GameObject mslTemp, targetTemp;
+    public GameObject mslTemp, targetTemp;
     
     void Awake()
     {
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {                
-                ExplodeMissile();
+                ResetMissile();
             }
         }
 
@@ -64,10 +64,12 @@ public class GameManager : MonoBehaviour
         targetTemp = Instantiate(moveTarget, missileSpawner.transform.position, missileSpawner.transform.parent.transform.parent.transform.localRotation, missileSpawner.transform);
     }
 
-    public void ExplodeMissile()
+    public void ResetMissile()
     {
-        mslTemp.GetComponent<Missile>().DoAOEDamage();
-        Destroy(mslTemp);
+        if (mslTemp != null)
+        {
+            mslTemp.GetComponent<Missile>().BlowUp();
+        }
         Destroy(targetTemp);
         activeMissile = false;
     }

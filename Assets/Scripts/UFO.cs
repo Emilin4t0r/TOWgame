@@ -65,7 +65,7 @@ public class UFO : MonoBehaviour
             }
             else
             {
-                if (!hit.transform.CompareTag("Missile"))
+                if (!hit.transform.CompareTag("Missile") && !hit.transform.CompareTag("Enemy"))
                 {
                     moveTargetImage = false;
                 }

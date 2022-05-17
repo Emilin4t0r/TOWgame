@@ -15,6 +15,8 @@ public class Missile : MonoBehaviour
     bool isLaunched;
     public GameObject fireEffect;
     public GameObject smokeEffect;
+    public GameObject startSmokeEffect;
+    public GameObject explosionEffect;
 
     private void Start()
     {
@@ -33,6 +35,8 @@ public class Missile : MonoBehaviour
         isLaunched = true;
         fireEffect.SetActive(true);
         smokeEffect.SetActive(true);
+        GameObject startSmk = Instantiate(startSmokeEffect, transform.position, Quaternion.identity, null);
+        Destroy(startSmk, 5);
     }
 
     private void Update()
@@ -56,12 +60,20 @@ public class Missile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.transform.GetComponent<UFO>().Kill();
-            GameManager.instance.ExplodeMissile();
-        } else
-        {
-            GameManager.instance.ExplodeMissile();
+            collision.transform.GetComponent<UFO>().Kill();            
         }
+        BlowUp();
+    }
+
+    public void BlowUp()
+    {        
+        GameObject expl = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Destroy(expl, 5);
+        smokeEffect.transform.parent = null;        
+        DoAOEDamage();
+        Destroy(gameObject);
+        GameManager.instance.mslTemp = null;
+        GameManager.instance.ResetMissile();
     }
 
     public void DoAOEDamage()

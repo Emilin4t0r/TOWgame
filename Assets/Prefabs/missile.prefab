@@ -54,6 +54,8 @@ MonoBehaviour:
   launchForce: 20
   fireEffect: {fileID: 4577150639666922639}
   smokeEffect: {fileID: 4577150639666935821}
+  startSmokeEffect: {fileID: 100014, guid: 5332791ebce075d4a9e56f4581e7fb47, type: 3}
+  explosionEffect: {fileID: 100008, guid: 7075bd5fe1480184695a32611c15da57, type: 3}
 --- !u!65 &5878219559962921785
 BoxCollider:
   m_ObjectHideFlags: 0
