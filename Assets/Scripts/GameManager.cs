@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        CamShaker.activeCam = cam1.name;
     }
 
     void Update()
@@ -47,11 +48,13 @@ public class GameManager : MonoBehaviour
         {
             cam2.SetActive(true);
             cam1.SetActive(false);
+            CamShaker.activeCam = cam2.name;
             scopedIn = true;            
         } else
         {
             cam1.SetActive(true);
             cam2.SetActive(false);
+            CamShaker.activeCam = cam1.name;
             scopedIn = false;
         }
         tubeRotator.GetComponent<FPSControl>().CheckMultip();
@@ -61,7 +64,7 @@ public class GameManager : MonoBehaviour
     {
         activeMissile = true;
         mslTemp = Instantiate(missile, missileSpawner.transform.position, missileSpawner.transform.rotation, transform);
-        targetTemp = Instantiate(moveTarget, missileSpawner.transform.position, missileSpawner.transform.parent.transform.parent.transform.localRotation, missileSpawner.transform);
+        targetTemp = Instantiate(moveTarget, missileSpawner.transform.position, missileSpawner.transform.parent.transform.parent.transform.localRotation, missileSpawner.transform);        
     }
 
     public void ResetMissile()

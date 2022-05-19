@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Missile : MonoBehaviour
 {
@@ -37,6 +38,7 @@ public class Missile : MonoBehaviour
         smokeEffect.SetActive(true);
         GameObject startSmk = Instantiate(startSmokeEffect, transform.position, Quaternion.identity, null);
         Destroy(startSmk, 5);
+        CamShaker.Shake(2);
     }
 
     private void Update()
@@ -74,6 +76,7 @@ public class Missile : MonoBehaviour
         Destroy(gameObject);
         GameManager.instance.mslTemp = null;
         GameManager.instance.ResetMissile();
+        CamShaker.Shake(4);
     }
 
     public void DoAOEDamage()

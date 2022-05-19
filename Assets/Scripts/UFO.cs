@@ -11,12 +11,14 @@ public class UFO : MonoBehaviour
     public TextMeshProUGUI distText;
     public TextMeshProUGUI targetNameText;
     public List<Renderer> shapes;
-    public float canvasSizeMultip = 500; 
+    public float canvasSizeMultip = 500;
+    public GameObject explodedUFO;
 
     Slider slider;
     float timeToUpdateText;
     public bool hasBeenRadared;
     public bool moveTargetImage;
+    bool isKilled;
 
     private void Start()
     {
@@ -27,8 +29,14 @@ public class UFO : MonoBehaviour
     }
     public void Kill()
     {
-        Radar.instance.RemoveFromTargets(gameObject);
-        transform.parent.GetComponent<Enemy>().Kill();
+        if (!isKilled)
+        {
+            isKilled = true;
+            Radar.instance.RemoveFromTargets(gameObject);
+            GameObject rubble = Instantiate(explodedUFO, transform.position, transform.rotation);
+            rubble.GetComponent<ExplodedUFO>().moveDir = transform.forward;
+            transform.parent.GetComponent<Enemy>().Kill();
+        }
     }
 
     void CanvasOn(bool val)
