@@ -56,7 +56,6 @@ public class Radar : MonoBehaviour
             {
                 targets.Add(col.gameObject);
                 col.GetComponent<UFO>().hasBeenRadared = true;
-                print("added " + col.transform.parent.name);
             }
         }
         foreach(var target in targets)
