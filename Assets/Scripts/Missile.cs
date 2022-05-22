@@ -39,6 +39,7 @@ public class Missile : MonoBehaviour
         GameObject startSmk = Instantiate(startSmokeEffect, transform.position, Quaternion.identity, null);
         Destroy(startSmk, 5);
         CamShaker.Shake(2);
+        transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
     }
 
     private void Update()
@@ -73,6 +74,11 @@ public class Missile : MonoBehaviour
         Destroy(expl, 5);
         smokeEffect.transform.parent = null;        
         DoAOEDamage();
+        float dist = Vector3.Distance(Vector3.zero, transform.position);
+        if (dist < 500)
+            transform.GetComponent<SoundPlayer>().SpawnSound(gameObject, 1, 1);
+        else
+            transform.GetComponent<SoundPlayer>().SpawnSound(gameObject, 2, 1);
         Destroy(gameObject);
         GameManager.instance.mslTemp = null;
         GameManager.instance.ResetMissile();

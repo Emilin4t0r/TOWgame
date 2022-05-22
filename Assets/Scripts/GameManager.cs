@@ -64,7 +64,8 @@ public class GameManager : MonoBehaviour
     {
         activeMissile = true;
         mslTemp = Instantiate(missile, missileSpawner.transform.position, missileSpawner.transform.rotation, transform);
-        targetTemp = Instantiate(moveTarget, missileSpawner.transform.position, missileSpawner.transform.parent.transform.parent.transform.localRotation, missileSpawner.transform);        
+        targetTemp = Instantiate(moveTarget, missileSpawner.transform.position, missileSpawner.transform.parent.transform.parent.transform.localRotation, missileSpawner.transform);
+        transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
     }
 
     public void ResetMissile()

@@ -15,6 +15,7 @@ public class ScopeController : MonoBehaviour
     void Start()
     {
         instance = this;
+        transform.GetComponent<SoundPlayer>().SpawnSoundLoop(GameManager.instance.cam2, 0, 0.2f);
     }
 
     void RaycastForTarget()
@@ -31,6 +32,7 @@ public class ScopeController : MonoBehaviour
                     targetedVehicle = hit.transform.parent.gameObject;
                     targetName = "TARGET " + (EnemySpawner.instance.activeEnemies.IndexOf(targetedVehicle.transform.parent.gameObject) + 1);
                     targetText.text = "TARGET LOCKED\n---------------\n" + targetName;
+                    transform.GetComponent<SoundPlayer>().PlaySound(1, 1);
                 }
             }
         }

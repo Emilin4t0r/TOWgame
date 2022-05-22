@@ -37,7 +37,7 @@ public class MenuController : MonoBehaviour
     public IEnumerator AnimationWaiter(Action func, GameObject ufo)
     {
         ExplodeUFOImage(ufo.transform.position);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         func();
     }
 

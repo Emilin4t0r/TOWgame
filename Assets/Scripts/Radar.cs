@@ -66,6 +66,8 @@ public class Radar : MonoBehaviour
             float z = target.transform.position.z / 3000;
             blip_.transform.localPosition = new Vector3(x, z, 0);
             blips.Add(blip_);
-        }       
+        }
+        if (!GameManager.instance.scopedIn)
+            transform.GetComponent<SoundPlayer>().PlaySound(0, 0.05f);
     }
 }

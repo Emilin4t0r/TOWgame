@@ -26,6 +26,8 @@ public class UFO : MonoBehaviour
         canvasParent.transform.SetParent(null, false);
         moveTargetImage = true;
         StartCoroutine(SpawnIn());
+        transform.GetComponent<SoundPlayer>().PlaySound(2, 1);
+        transform.GetComponent<SoundPlayer>().SpawnSoundLoop(gameObject, 1, 0.2f);
     }
     public void Kill()
     {
@@ -35,6 +37,7 @@ public class UFO : MonoBehaviour
             Radar.instance.RemoveFromTargets(gameObject);
             GameObject rubble = Instantiate(explodedUFO, transform.position, transform.rotation);
             rubble.GetComponent<ExplodedUFO>().moveDir = transform.forward;
+            transform.GetComponent<SoundPlayer>().SpawnSound(gameObject, 0, 1);
             transform.parent.GetComponent<Enemy>().Kill();
         }
     }
