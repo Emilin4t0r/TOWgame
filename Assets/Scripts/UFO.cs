@@ -7,9 +7,12 @@ using TMPro;
 public class UFO : MonoBehaviour
 {
     GameObject missile;
+    public Color sliderColorNormal, sliderColorPast;
+    public Image sliderFill;
     public GameObject canvasParent;
     public TextMeshProUGUI distText;
     public TextMeshProUGUI targetNameText;
+    public TextMeshProUGUI distArrow;
     public List<Renderer> shapes;
     public float canvasSizeMultip = 500;
     public GameObject explodedUFO;
@@ -113,19 +116,43 @@ public class UFO : MonoBehaviour
                 canvasParent.transform.localScale = new Vector3(dist / canvasSizeMultip, dist / canvasSizeMultip, 1);
                 canvasParent.transform.localPosition = transform.position;
                 canvasParent.transform.Translate(0, 0, 10, Space.Self);
-            }
-            float distFromMissile;
+            }            
             if (missile == null)
             {
                 missile = GameObject.FindGameObjectWithTag("Missile");
+                distArrow.text = "";
+                sliderFill.color = sliderColorNormal;
             }
             else
             {
-                distFromMissile = Vector3.Distance(transform.position, missile.transform.position);
+                float distFromMissile = Vector3.Distance(transform.position, missile.transform.position);
+                float distLauncherToUFO = Vector3.Distance(GameManager.instance.transform.position, transform.position);
+                float distLauncherToMissile = Vector3.Distance(GameManager.instance.transform.position, missile.transform.position);
                 if (Time.time > timeToUpdateText)
                 {
                     distText.text = distFromMissile.ToString("F2") + " m";
                     timeToUpdateText = Time.time + 0.2f;
+                    // Checking distArrow placement
+                    if (distLauncherToUFO > distLauncherToMissile) // Missile is NOT past UFO
+                    {
+                        if (distFromMissile > 500)
+                        {
+                            distArrow.text = ">";
+                            distArrow.transform.localPosition = new Vector3(125, 0, 0);
+                            sliderFill.color = sliderColorNormal;
+                        }
+                        else
+                        {
+                            distArrow.text = "";
+                            sliderFill.color = sliderColorNormal;
+                        }
+                    }
+                    else if (distLauncherToUFO < distLauncherToMissile) // Missile IS past UFO
+                    {
+                        distArrow.text = "<";
+                        distArrow.transform.localPosition = new Vector3(-125, 0, 0);
+                        sliderFill.color = sliderColorPast;
+                    }
                 }
                 slider.value = distFromMissile / 500;
                 return;
