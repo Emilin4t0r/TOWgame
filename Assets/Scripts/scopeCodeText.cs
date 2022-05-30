@@ -20,7 +20,7 @@ public class scopeCodeText : MonoBehaviour
     {
         if (Time.time > timeToChange)
         {
-            if (codesList.Count == 6) codesList.Remove(codesList[0]);
+            if (codesList.Count == 10) codesList.Remove(codesList[0]);
             string nextCode = "";            
             for (int i = 0; i < 8; ++i)
             {
@@ -30,7 +30,7 @@ public class scopeCodeText : MonoBehaviour
             string allCodes = "";
             foreach(string code in codesList)
             {
-                allCodes += code + " ";
+                allCodes += code + "\n";
             }
 
             codeText.text = allCodes;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,13 +17,16 @@ public class GameManager : MonoBehaviour
     private bool activeMissile;
     public GameObject mslTemp, targetTemp;
 
-    public float timeLeft = 180;
+    public float playTime = 180;
+    public float timeLeft;
     public int kills;
+    public Image clockImage;
 
     void Awake()
     {
         instance = this;
         CamShaker.activeCam = cam1.name;
+        timeLeft = playTime;
     }
 
     void Update()
@@ -50,6 +54,7 @@ public class GameManager : MonoBehaviour
     void CountTime()
     {
         timeLeft -= Time.deltaTime;
+        clockImage.fillAmount = timeLeft / playTime;
     }
 
     void ChangeCam()
