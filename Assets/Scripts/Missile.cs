@@ -97,4 +97,9 @@ public class Missile : MonoBehaviour
             }
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, AOERadius);
+    }
 }

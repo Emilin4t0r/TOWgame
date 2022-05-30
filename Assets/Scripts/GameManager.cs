@@ -11,11 +11,14 @@ public class GameManager : MonoBehaviour
     public GameObject cam1, cam2;
     public GameObject tubeRotator;
     public float launchDelay;
-    public bool scopedIn;
+    public bool scopedIn;    
 
     private bool activeMissile;
     public GameObject mslTemp, targetTemp;
-    
+
+    public float timeLeft = 180;
+    public int kills;
+
     void Awake()
     {
         instance = this;
@@ -40,6 +43,13 @@ public class GameManager : MonoBehaviour
         {
             ChangeCam();
         }
+
+        CountTime();
+    }
+
+    void CountTime()
+    {
+        timeLeft -= Time.deltaTime;
     }
 
     void ChangeCam()

@@ -52,7 +52,7 @@ MonoBehaviour:
   speed: 5
   rotationSpeed: 100
   targetTag: Target
-  AOERadius: 10
+  AOERadius: 20
   launchForce: 20
   fireEffect: {fileID: 4577150639666922639}
   smokeEffect: {fileID: 4577150639666935821}
