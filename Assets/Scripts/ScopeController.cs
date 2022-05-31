@@ -12,10 +12,12 @@ public class ScopeController : MonoBehaviour
     public string targetName = "";
     public float raycastInterval = 0.2f;
     float timeToRaycast;
+    public bool trackingLost;
     void Start()
     {
         instance = this;
         transform.GetComponent<SoundPlayer>().SpawnSoundLoop(GameManager.instance.cam2, 0, 0.2f);
+        gameObject.SetActive(false);
     }
 
     void RaycastForTarget()
@@ -48,6 +50,7 @@ public class ScopeController : MonoBehaviour
         if (targetedVehicle == null)
         {
             targetText.text = "NO TARGET\n---------------";
+            trackingLost = false;
             if (!targetImg.activeSelf)
                 targetImg.SetActive(true);
         }
@@ -56,10 +59,12 @@ public class ScopeController : MonoBehaviour
             if (!targetedVehicle.GetComponent<UFO>().moveTargetImage)
             {
                 targetText.text = "TRACKING LOST\n---------------";
+                trackingLost = true;
             }
             else
             {
                 targetText.text = "TARGET LOCKED\n---------------\n" + targetName;
+                trackingLost = false;
             }
             targetedVehicle.GetComponent<UFO>().CheckCanvasActive();
             if (targetImg.activeSelf)

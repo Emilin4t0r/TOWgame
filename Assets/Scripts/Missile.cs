@@ -65,15 +65,16 @@ public class Missile : MonoBehaviour
         {
             collision.transform.GetComponent<UFO>().Kill();            
         }
-        BlowUp();
+        BlowUp(false);
     }
 
-    public void BlowUp()
+    public void BlowUp(bool doAOE)
     {        
         GameObject expl = Instantiate(explosionEffect, transform.position, Quaternion.identity);
         Destroy(expl, 5);
-        smokeEffect.transform.parent = null;        
-        DoAOEDamage();
+        smokeEffect.transform.parent = null;
+        if (doAOE)
+            DoAOEDamage();
         float dist = Vector3.Distance(Vector3.zero, transform.position);
         if (dist < 500)
             transform.GetComponent<SoundPlayer>().SpawnSound(gameObject, 1, 1);
@@ -94,6 +95,7 @@ public class Missile : MonoBehaviour
             if (hitCols[i].CompareTag("Enemy"))
             {
                 hitCols[i].GetComponent<UFO>().Kill();
+                Score.Increase(100, "Collateral");
             }
         }
     }

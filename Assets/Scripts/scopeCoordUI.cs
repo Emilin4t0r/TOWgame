@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class scopeCoordUI : MonoBehaviour
+public class ScopeCoordUI : MonoBehaviour
 {
     public Text text;
 

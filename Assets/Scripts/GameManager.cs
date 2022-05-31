@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public float playTime = 180;
     public float timeLeft;
     public int kills;
+    float timeFromLastKill;
     public Image clockImage;
 
     void Awake()
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
         instance = this;
         CamShaker.activeCam = cam1.name;
         timeLeft = playTime;
+        timeFromLastKill = 100;
     }
 
     void Update()
@@ -38,7 +40,7 @@ public class GameManager : MonoBehaviour
                 SpawnMissile();
             }
             else
-            {                
+            {
                 ResetMissile();
             }
         }
@@ -64,8 +66,9 @@ public class GameManager : MonoBehaviour
             cam2.SetActive(true);
             cam1.SetActive(false);
             CamShaker.activeCam = cam2.name;
-            scopedIn = true;            
-        } else
+            scopedIn = true;
+        }
+        else
         {
             cam1.SetActive(true);
             cam2.SetActive(false);
@@ -83,11 +86,22 @@ public class GameManager : MonoBehaviour
         transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
     }
 
+    public void GetKill(UFO ufo)
+    {
+        kills++;
+        Score.Increase(100, "Kill");
+        if (!scopedIn) Score.Increase(100, "No scope");
+        if (Vector3.Distance(transform.position, ufo.transform.position) > 500) Score.Increase(50, "Long range");
+        if (Time.time - timeFromLastKill < 5) Score.Increase(50, "Combo");
+        timeFromLastKill = Time.time;
+        if (ScopeController.instance.trackingLost) Score.Increase(200, "Blind shot");        
+    }
+
     public void ResetMissile()
     {
         if (mslTemp != null)
         {
-            mslTemp.GetComponent<Missile>().BlowUp();
+            mslTemp.GetComponent<Missile>().BlowUp(true);
         }
         Destroy(targetTemp);
         activeMissile = false;

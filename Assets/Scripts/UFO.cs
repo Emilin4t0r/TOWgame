@@ -41,7 +41,8 @@ public class UFO : MonoBehaviour
             GameObject rubble = Instantiate(explodedUFO, transform.position, transform.rotation);
             rubble.GetComponent<ExplodedUFO>().moveDir = transform.forward;
             transform.GetComponent<SoundPlayer>().SpawnSound(gameObject, 0, 1);
-            GameManager.instance.kills++;
+
+            GameManager.instance.GetKill(this);
 
             transform.parent.GetComponent<Enemy>().Kill();
         }

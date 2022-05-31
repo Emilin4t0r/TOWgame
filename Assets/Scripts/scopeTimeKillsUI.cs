@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class scopeTimeKillsUI : MonoBehaviour
+public class ScopeTimeKillsUI : MonoBehaviour
 {
     Text text;
     string timeLeft;
