@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject cam1, cam2;
     public GameObject tubeRotator;
     public float launchDelay;
-    public bool scopedIn;    
+    public bool scopedIn;
 
     private bool activeMissile;
     public GameObject mslTemp, targetTemp;
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public float timeLeft;
     public int kills;
     float timeFromLastKill;
+    public Dictionary<string, int> killScores;
     public Image clockImage;
 
     void Awake()
@@ -86,15 +87,28 @@ public class GameManager : MonoBehaviour
         transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
     }
 
-    public void GetKill(UFO ufo)
+    public void GetKill(UFO ufo, bool wasAOEd)
     {
+        killScores = new Dictionary<string, int>();
         kills++;
-        Score.Increase(100, "Kill");
-        if (!scopedIn) Score.Increase(100, "No scope");
-        if (Vector3.Distance(transform.position, ufo.transform.position) > 500) Score.Increase(50, "Long range");
-        if (Time.time - timeFromLastKill < 5) Score.Increase(50, "Combo");
+
+        killScores.Add("Kill", 100);
+        if (!scopedIn) killScores.Add("No scope", 100);
+        if (Vector3.Distance(transform.position, ufo.transform.position) > 500) killScores.Add("Long range", 50);
+        if (Time.time - timeFromLastKill < 5) killScores.Add("Combo", 50);
         timeFromLastKill = Time.time;
-        if (ScopeController.instance.trackingLost) Score.Increase(200, "Blind shot");        
+        if (ScopeController.instance.trackingLost) killScores.Add("Blind shot", 200);
+        if (wasAOEd) killScores.Add("Collateral", 100);
+
+        StartCoroutine(ScoreInvoker(killScores));
+    }
+    IEnumerator ScoreInvoker(Dictionary<string, int> scores)
+    {
+        foreach (var score in scores)
+        {            
+            Score.Increase(score.Value, score.Key);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public void ResetMissile()

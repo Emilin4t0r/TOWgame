@@ -63,7 +63,7 @@ public class Missile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.transform.GetComponent<UFO>().Kill();            
+            collision.transform.GetComponent<UFO>().Kill(false);            
         }
         BlowUp(false);
     }
@@ -94,8 +94,7 @@ public class Missile : MonoBehaviour
         {
             if (hitCols[i].CompareTag("Enemy"))
             {
-                hitCols[i].GetComponent<UFO>().Kill();
-                Score.Increase(100, "Collateral");
+                hitCols[i].GetComponent<UFO>().Kill(true);                                
             }
         }
     }

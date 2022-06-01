@@ -32,7 +32,7 @@ public class UFO : MonoBehaviour
         transform.GetComponent<SoundPlayer>().PlaySound(2, 1);
         transform.GetComponent<SoundPlayer>().SpawnSoundLoop(gameObject, 1, 0.2f);
     }
-    public void Kill()
+    public void Kill(bool wasAOEd)
     {
         if (!isKilled)
         {
@@ -42,7 +42,7 @@ public class UFO : MonoBehaviour
             rubble.GetComponent<ExplodedUFO>().moveDir = transform.forward;
             transform.GetComponent<SoundPlayer>().SpawnSound(gameObject, 0, 1);
 
-            GameManager.instance.GetKill(this);
+            GameManager.instance.GetKill(this, wasAOEd);
 
             transform.parent.GetComponent<Enemy>().Kill();
         }
