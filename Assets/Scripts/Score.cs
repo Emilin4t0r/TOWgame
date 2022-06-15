@@ -11,6 +11,7 @@ public class Score : MonoBehaviour
         score += amt;
         string scoreInfo = text + " +" + amt.ToString();
         ScopeCodeText.instance.AddNewCode(scoreInfo);
-        ScoreListUI.instance.AddNewScoreText(scoreInfo);        
+        ScoreListUI.instance.AddNewScoreText(scoreInfo);
+        ScoreSaver.savedScore = score;
     }
 }

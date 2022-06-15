@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -58,6 +59,18 @@ public class GameManager : MonoBehaviour
     {
         timeLeft -= Time.deltaTime;
         clockImage.fillAmount = timeLeft / playTime;
+        if (timeLeft <= 0)
+        {
+            StartCoroutine(EndGame());
+        }
+    }
+
+    IEnumerator EndGame()
+    {
+        //Start fade to black
+        //End riser sfx
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("EndScene");
     }
 
     void ChangeCam()
@@ -95,7 +108,7 @@ public class GameManager : MonoBehaviour
         killScores.Add("Kill", 100);
         if (!scopedIn) killScores.Add("No scope", 100);
         if (Vector3.Distance(transform.position, ufo.transform.position) > 500) killScores.Add("Long range", 50);
-        if (Time.time - timeFromLastKill < 5) killScores.Add("Combo", 50);
+        if (Time.time - timeFromLastKill < 5 && kills > 1) killScores.Add("Combo", 50);
         timeFromLastKill = Time.time;
         if (ScopeController.instance.trackingLost) killScores.Add("Blind shot", 200);
         if (wasAOEd) killScores.Add("Collateral", 100);
@@ -107,7 +120,7 @@ public class GameManager : MonoBehaviour
         foreach (var score in scores)
         {            
             Score.Increase(score.Value, score.Key);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
