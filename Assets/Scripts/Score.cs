@@ -13,5 +13,6 @@ public class Score : MonoBehaviour
         ScopeCodeText.instance.AddNewCode(scoreInfo);
         ScoreListUI.instance.AddNewScoreText(scoreInfo);
         ScoreSaver.savedScore = score;
+        LauncherScoreText.UpdateScore();
     }
 }

@@ -18,6 +18,11 @@ public class MenuController : MonoBehaviour
         print("opening options!");
     }
 
+    void OpenTutorial()
+    {
+        print("opening tutorial");
+    }
+
     public void StartButton()
     {
         StartCoroutine(AnimationWaiter(() => StartGame(), buttons[0].gameObject));
@@ -28,10 +33,15 @@ public class MenuController : MonoBehaviour
         StartCoroutine(AnimationWaiter(() => OpenOptions(), buttons[1].gameObject));
         buttons[1].SetActive(false);
     }
+    public void TutorialButton()
+    {
+        StartCoroutine(AnimationWaiter(() => OpenTutorial(), buttons[2].gameObject));
+        buttons[2].SetActive(false);
+    }
     public void QuitButton()
     {
-        StartCoroutine(AnimationWaiter(() => QuitGame(), buttons[2].gameObject));
-        buttons[2].SetActive(false);
+        StartCoroutine(AnimationWaiter(() => QuitGame(), buttons[3].gameObject));
+        buttons[3].SetActive(false);
     }    
 
     public IEnumerator AnimationWaiter(Action func, GameObject ufo)

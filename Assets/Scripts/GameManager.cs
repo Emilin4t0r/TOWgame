@@ -35,24 +35,27 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (!pauseManager.isPaused)
         {
-            if (!activeMissile)
+            if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                SpawnMissile();
+                if (!activeMissile)
+                {
+                    SpawnMissile();
+                }
+                else
+                {
+                    ResetMissile();
+                }
             }
-            else
+
+            if (Input.GetKeyDown(KeyCode.Mouse1))
             {
-                ResetMissile();
+                ChangeCam();
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            ChangeCam();
+            CountTime();
         }
-
-        CountTime();
     }
 
     void CountTime()
@@ -81,6 +84,7 @@ public class GameManager : MonoBehaviour
             cam1.SetActive(false);
             CamShaker.activeCam = cam2.name;
             scopedIn = true;
+            ScopeController.instance.trackingLost = false;
         }
         else
         {
