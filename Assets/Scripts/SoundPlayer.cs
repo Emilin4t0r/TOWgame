@@ -17,7 +17,7 @@ public class SoundPlayer : MonoBehaviour
     public void PlaySound(int audioIndex, float volume)
     {
         audioSource.pitch = Random.Range(0.9f, 1.1f);
-        audioSource.PlayOneShot(sfx[audioIndex], volume);        
+        audioSource.PlayOneShot(sfx[audioIndex], volume * SettingsSaver.sfxVol);        
     }
 
     public void SpawnSound(GameObject origin, int audioIndex, float volume)
@@ -25,7 +25,7 @@ public class SoundPlayer : MonoBehaviour
         var sound = Instantiate(soundPrefab, origin.transform.position, origin.transform.rotation);
         var aSource = sound.GetComponent<AudioSource>();
         audioSource.pitch = Random.Range(0.9f, 1.1f);
-        aSource.PlayOneShot(sfx[audioIndex], volume);
+        aSource.PlayOneShot(sfx[audioIndex], volume * SettingsSaver.sfxVol);
     }
 
     public void SpawnSoundLoop(GameObject origin, int audioIndex, float volume)
@@ -35,7 +35,7 @@ public class SoundPlayer : MonoBehaviour
         aSource.loop = true;
         aSource.clip = sfx[audioIndex];
         audioSource.pitch = Random.Range(0.9f, 1.1f);
-        aSource.volume = volume;
+        aSource.volume = volume * SettingsSaver.sfxVol;
         aSource.Play();        
     }
 }

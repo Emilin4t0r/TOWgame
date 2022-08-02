@@ -8,7 +8,12 @@ public class MenuController : MonoBehaviour
 {
     public GameObject explosionObj;
     public GameObject[] buttons;
-    
+
+    private void Awake()
+    {
+        Score.score = 0;
+    }
+
     void StartGame() => SceneManager.LoadScene("GameScene");
 
     void QuitGame() => Application.Quit();

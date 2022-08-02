@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class FPSControl : MonoBehaviour
 {
+    public static FPSControl instance;
+
     public float minX = -60f; //lower limit value for camera x-axis
     public float maxX = 60f; //upper limit value for camera x-axis
     public float sensitivity, scopedSensitivity;
+    float multip;
     float yRot = 0f;
     float xRot = 0f;
 
-    float multip;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -24,6 +31,9 @@ public class FPSControl : MonoBehaviour
 
     public void CheckMultip()
     {
+        float baseSens = SettingsSaver.mouseSens * 500;
+        sensitivity = baseSens;
+        scopedSensitivity = baseSens / 2;
         if (GameManager.instance.scopedIn)
         {
             multip = scopedSensitivity;
