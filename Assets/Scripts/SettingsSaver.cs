@@ -34,8 +34,7 @@ public class SettingsSaver : MonoBehaviour
         else if (sceneName == "GameScene")
         {
             GameMusic.music.volume = musicVol;
-        }
-
-        FPSControl.instance.CheckMultip();
+            FPSControl.instance.CheckMultip();
+        }        
     }
 }

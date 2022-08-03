@@ -2,12 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
     public GameObject explosionObj;
     public GameObject[] buttons;
+
+    public GameObject mainMenu, optionsMenu, tutorialMenu;
+    public Slider sfxSlider, musicSlider, mouseSensSlider;
 
     private void Awake()
     {
@@ -20,7 +24,7 @@ public class MenuController : MonoBehaviour
 
     void OpenOptions()
     {
-        print("opening options!");
+        ToggleOptions();
     }
 
     void OpenTutorial()
@@ -60,5 +64,34 @@ public class MenuController : MonoBehaviour
     {
         GameObject expl = Instantiate(explosionObj, pos, Quaternion.identity);
         expl.GetComponent<Animator>().Play("menu_expl_anim");
+    }
+
+
+    // Options
+
+    public void ToggleOptions()
+    {
+        if (!optionsMenu.activeSelf)
+        {
+            optionsMenu.SetActive(true);
+            mainMenu.SetActive(false);
+            UpdateSliders(SettingsSaver.sfxVol, SettingsSaver.musicVol, SettingsSaver.mouseSens);
+        } else
+        {
+            optionsMenu.SetActive(false);
+            mainMenu.SetActive(true);
+            SaveSettings();
+            buttons[1].SetActive(true);
+        }
+    }
+    public void UpdateSliders(float _sfx, float _music, float _sens)
+    {
+        sfxSlider.value = _sfx;
+        musicSlider.value = _music;
+        mouseSensSlider.value = _sens;
+    }
+    public void SaveSettings()
+    {
+        SettingsSaver.UpdateSettings(sfxSlider.value, musicSlider.value, mouseSensSlider.value);
     }
 }

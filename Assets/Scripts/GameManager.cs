@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public float launchDelay;
     public bool scopedIn;
 
-    private bool activeMissile;
+    public bool activeMissile;
     public GameObject mslTemp, targetTemp;
 
     public float playTime = 180;
@@ -102,6 +102,7 @@ public class GameManager : MonoBehaviour
         mslTemp = Instantiate(missile, missileSpawner.transform.position, missileSpawner.transform.rotation, transform);
         targetTemp = Instantiate(moveTarget, missileSpawner.transform.position, missileSpawner.transform.parent.transform.parent.transform.localRotation, missileSpawner.transform);
         transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
+        StartCoroutine(ScopeMissileStatus.instance.UpdateText());
     }
 
     public void GetKill(UFO ufo, bool wasAOEd)
@@ -136,5 +137,6 @@ public class GameManager : MonoBehaviour
         }
         Destroy(targetTemp);
         activeMissile = false;
+        ScopeMissileStatus.instance.CheckMissileActive();
     }
 }
