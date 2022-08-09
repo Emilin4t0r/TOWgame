@@ -52,6 +52,11 @@ public class MenuController : MonoBehaviour
         StartCoroutine(AnimationWaiter(() => QuitGame(), buttons[3].gameObject));
         buttons[3].SetActive(false);
     }    
+    public void OptionsBackButton()
+    {
+        StartCoroutine(AnimationWaiter(() => ToggleOptions(), buttons[4].gameObject));
+        buttons[4].SetActive(false);
+    }
 
     public IEnumerator AnimationWaiter(Action func, GameObject ufo)
     {
@@ -66,7 +71,13 @@ public class MenuController : MonoBehaviour
         expl.GetComponent<Animator>().Play("menu_expl_anim");
     }
 
-
+    void ResetButtons()
+    {
+        foreach(GameObject but in buttons)
+        {
+            but.SetActive(true);
+        }
+    }
     // Options
 
     public void ToggleOptions()
@@ -76,12 +87,13 @@ public class MenuController : MonoBehaviour
             optionsMenu.SetActive(true);
             mainMenu.SetActive(false);
             UpdateSliders(SettingsSaver.sfxVol, SettingsSaver.musicVol, SettingsSaver.mouseSens);
+            ResetButtons();
         } else
         {
             optionsMenu.SetActive(false);
             mainMenu.SetActive(true);
             SaveSettings();
-            buttons[1].SetActive(true);
+            ResetButtons();
         }
     }
     public void UpdateSliders(float _sfx, float _music, float _sens)

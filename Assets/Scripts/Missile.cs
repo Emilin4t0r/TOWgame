@@ -13,7 +13,7 @@ public class Missile : MonoBehaviour
     public float launchForce;
     private Transform target;
     private Rigidbody rb;
-    bool isLaunched;
+    public bool isLaunched;
     public GameObject fireEffect;
     public GameObject smokeEffect;
     public GameObject startSmokeEffect;

@@ -45,7 +45,8 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    ResetMissile();
+                    if (mslTemp.GetComponent<Missile>().isLaunched)
+                        ResetMissile();
                 }
             }
 
@@ -102,7 +103,7 @@ public class GameManager : MonoBehaviour
         mslTemp = Instantiate(missile, missileSpawner.transform.position, missileSpawner.transform.rotation, transform);
         targetTemp = Instantiate(moveTarget, missileSpawner.transform.position, missileSpawner.transform.parent.transform.parent.transform.localRotation, missileSpawner.transform);
         transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
-        StartCoroutine(ScopeMissileStatus.instance.UpdateText());
+        StartCoroutine(ScopeMissileStatus.instance.LaunchText());
     }
 
     public void GetKill(UFO ufo, bool wasAOEd)
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour
         if (wasAOEd) killScores.Add("Collateral", 100);
 
         StartCoroutine(ScoreInvoker(killScores));
+        StartCoroutine(ScopeMissileStatus.instance.SplashText());
     }
     IEnumerator ScoreInvoker(Dictionary<string, int> scores)
     {
@@ -137,6 +139,7 @@ public class GameManager : MonoBehaviour
         }
         Destroy(targetTemp);
         activeMissile = false;
-        ScopeMissileStatus.instance.CheckMissileActive();
+        if (!ScopeMissileStatus.instance.waiting)
+            ScopeMissileStatus.instance.CheckMissileActive();
     }
 }

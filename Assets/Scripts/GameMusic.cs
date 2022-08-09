@@ -8,5 +8,6 @@ public class GameMusic : MonoBehaviour
     private void Awake()
     {
         music = transform.GetComponent<AudioSource>();
+        music.volume = SettingsSaver.musicVol;
     }    
 }

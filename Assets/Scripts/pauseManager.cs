@@ -48,14 +48,16 @@ public class pauseManager : MonoBehaviour
     #region pausemenu
     public void LoadMainMenu()
     {
-        TogglePause();
+        transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
+        TogglePause();        
         Cursor.lockState = CursorLockMode.None;
-        SceneManager.LoadScene("MainMenu");   
+        SceneManager.LoadScene("MainMenu");        
     }
 
     public void Resume()
     {
         TogglePause();
+        transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
     }
 
     void UpdateSliders(float _sfx, float _music, float _sens)
