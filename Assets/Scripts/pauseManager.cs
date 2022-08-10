@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class pauseManager : MonoBehaviour
 {
 
     public static bool isPaused;
     public Slider sfxSlider, musicSlider, mouseSensSlider;
+    public TMP_Dropdown quality;
     public GameObject pauseCanvas;
 
     void Update()
@@ -29,7 +31,7 @@ public class pauseManager : MonoBehaviour
             GameMusic.music.Pause();
             GameManager.instance.cam1.GetComponent<AudioListener>().enabled = false;
             GameManager.instance.cam2.GetComponent<AudioListener>().enabled = false;
-            UpdateSliders(SettingsSaver.sfxVol, SettingsSaver.musicVol, SettingsSaver.mouseSens);
+            UpdateUIValues(SettingsSaver.sfxVol, SettingsSaver.musicVol, SettingsSaver.mouseSens, SettingsSaver.graphicsQuality);
             pauseCanvas.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
         }
@@ -60,16 +62,17 @@ public class pauseManager : MonoBehaviour
         transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
     }
 
-    void UpdateSliders(float _sfx, float _music, float _sens)
+    void UpdateUIValues(float _sfx, float _music, float _sens, int _quality)
     {
         sfxSlider.value = _sfx;
         musicSlider.value = _music;
         mouseSensSlider.value = _sens;
+        quality.value = _quality;
     }
 
     public void SaveSettings()
     {
-        SettingsSaver.UpdateSettings(sfxSlider.value, musicSlider.value, mouseSensSlider.value);
+        SettingsSaver.UpdateSettings(sfxSlider.value, musicSlider.value, mouseSensSlider.value, quality.value);
     }
     #endregion
 }

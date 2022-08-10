@@ -6,23 +6,23 @@ using UnityEngine.SceneManagement;
 public class SettingsSaver : MonoBehaviour
 {
     public static float sfxVol, musicVol, mouseSens;
-    public enum GraphicsQuality { Low, Mid, High };
-    public static GraphicsQuality graphicsQuality;
+    public static int graphicsQuality;
 
     private void Awake()
-    {
-        print("Called");
+    {                
         sfxVol = 0.5f;
         musicVol = 0.5f;
         mouseSens = 0.5f;
+        graphicsQuality = QualitySettings.GetQualityLevel();
     }
 
     // Called when updating settings in pause menu or main menu settings
-    public static void UpdateSettings(float _sfx, float _music, float _sens)
+    public static void UpdateSettings(float _sfx, float _music, float _sens, int _quality)
     {
         sfxVol = _sfx;
         musicVol = _music;
         mouseSens = _sens;
+        graphicsQuality = _quality;
 
         // Apply values to relative targets
         Scene curScene = SceneManager.GetActiveScene();
@@ -34,7 +34,9 @@ public class SettingsSaver : MonoBehaviour
         else if (sceneName == "GameScene")
         {
             GameMusic.music.volume = musicVol;
-            FPSControl.instance.CheckMultip();
-        }        
+            FPSControl.instance.CheckMultip();            
+        }
+
+        QualitySettings.SetQualityLevel(graphicsQuality);
     }
 }

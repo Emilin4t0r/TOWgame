@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
     {
         //Start fade to black
         //End riser sfx
+        Fader.StartFade();
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene("EndScene");
     }

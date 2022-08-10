@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MenuController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MenuController : MonoBehaviour
 
     public GameObject mainMenu, optionsMenu, tutorialMenu;
     public Slider sfxSlider, musicSlider, mouseSensSlider;
+    public TMP_Dropdown quality;
 
     private void Awake()
     {
@@ -86,7 +88,7 @@ public class MenuController : MonoBehaviour
         {
             optionsMenu.SetActive(true);
             mainMenu.SetActive(false);
-            UpdateSliders(SettingsSaver.sfxVol, SettingsSaver.musicVol, SettingsSaver.mouseSens);
+            UpdateUIValues(SettingsSaver.sfxVol, SettingsSaver.musicVol, SettingsSaver.mouseSens, SettingsSaver.graphicsQuality);
             ResetButtons();
         } else
         {
@@ -96,14 +98,15 @@ public class MenuController : MonoBehaviour
             ResetButtons();
         }
     }
-    public void UpdateSliders(float _sfx, float _music, float _sens)
+    public void UpdateUIValues(float _sfx, float _music, float _sens, int _quality)
     {
         sfxSlider.value = _sfx;
         musicSlider.value = _music;
         mouseSensSlider.value = _sens;
+        quality.value = _quality;
     }
     public void SaveSettings()
     {
-        SettingsSaver.UpdateSettings(sfxSlider.value, musicSlider.value, mouseSensSlider.value);
+        SettingsSaver.UpdateSettings(sfxSlider.value, musicSlider.value, mouseSensSlider.value, quality.value);
     }
 }
