@@ -31,7 +31,8 @@ public class MenuController : MonoBehaviour
 
     void OpenTutorial()
     {
-        print("opening tutorial");
+        tutorialMenu.SetActive(true);
+        Invoke("ResetButtons", 0.1f);
     }
 
     public void StartButton()
@@ -73,7 +74,7 @@ public class MenuController : MonoBehaviour
         expl.GetComponent<Animator>().Play("menu_expl_anim");
     }
 
-    void ResetButtons()
+    public void ResetButtons()
     {
         foreach(GameObject but in buttons)
         {

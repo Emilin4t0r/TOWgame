@@ -10,7 +10,6 @@ public class pauseManager : MonoBehaviour
 
     public static bool isPaused;
     public Slider sfxSlider, musicSlider, mouseSensSlider;
-    public TMP_Dropdown quality;
     public GameObject pauseCanvas;
 
     void Update()
@@ -31,7 +30,7 @@ public class pauseManager : MonoBehaviour
             GameMusic.music.Pause();
             GameManager.instance.cam1.GetComponent<AudioListener>().enabled = false;
             GameManager.instance.cam2.GetComponent<AudioListener>().enabled = false;
-            UpdateUIValues(SettingsSaver.sfxVol, SettingsSaver.musicVol, SettingsSaver.mouseSens, SettingsSaver.graphicsQuality);
+            UpdateUIValues(SettingsSaver.sfxVol, SettingsSaver.musicVol, SettingsSaver.mouseSens);
             pauseCanvas.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
         }
@@ -62,17 +61,16 @@ public class pauseManager : MonoBehaviour
         transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
     }
 
-    void UpdateUIValues(float _sfx, float _music, float _sens, int _quality)
+    void UpdateUIValues(float _sfx, float _music, float _sens)
     {
         sfxSlider.value = _sfx;
         musicSlider.value = _music;
         mouseSensSlider.value = _sens;
-        quality.value = _quality;
     }
 
     public void SaveSettings()
     {
-        SettingsSaver.UpdateSettings(sfxSlider.value, musicSlider.value, mouseSensSlider.value, quality.value);
+        SettingsSaver.UpdateSettings(sfxSlider.value, musicSlider.value, mouseSensSlider.value, SettingsSaver.graphicsQuality);
     }
     #endregion
 }

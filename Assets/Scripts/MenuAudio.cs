@@ -12,4 +12,9 @@ public class MenuAudio : MonoBehaviour
     {
         transform.GetComponent<SoundPlayer>().PlaySound(0, 1);
     }
+    public void PlayArrow()
+    {
+        transform.GetComponent<SoundPlayer>().PlaySound(2, 2);
+    }
+
 }
