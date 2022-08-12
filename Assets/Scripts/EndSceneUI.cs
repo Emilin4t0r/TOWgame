@@ -19,6 +19,7 @@ public class EndSceneUI : MonoBehaviour
     {
         HighScores.UploadScore(inputField.GetComponent<TMP_InputField>().text, ScoreSaver.savedScore);
         ScoreSaver.savedScore = 0;
+        Score.score = 0;
         preBoard.SetActive(false);
         navButtons.SetActive(true);
     }

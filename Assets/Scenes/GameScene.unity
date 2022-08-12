@@ -6279,7 +6279,6 @@ MonoBehaviour:
   sfxSlider: {fileID: 1978790223}
   musicSlider: {fileID: 1715048370}
   mouseSensSlider: {fileID: 1266557803}
-  quality: {fileID: 0}
   pauseCanvas: {fileID: 464804296}
 --- !u!4 &1136068835
 Transform:
@@ -12649,8 +12648,8 @@ MonoBehaviour:
   activeMissile: 0
   mslTemp: {fileID: 0}
   targetTemp: {fileID: 0}
-  playTime: 180
-  timeLeft: 180
+  playTime: 10
+  timeLeft: 10
   kills: 0
   clockImage: {fileID: 551719984}
 --- !u!4 &2057809948
