@@ -12648,8 +12648,8 @@ MonoBehaviour:
   activeMissile: 0
   mslTemp: {fileID: 0}
   targetTemp: {fileID: 0}
-  playTime: 10
-  timeLeft: 10
+  playTime: 180
+  timeLeft: 180
   kills: 0
   clockImage: {fileID: 551719984}
 --- !u!4 &2057809948
